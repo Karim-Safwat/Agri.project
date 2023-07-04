@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "60373283759",
+    "project_id": "fir-project-8b499",
+    "storage_bucket": "fir-project-8b499.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60373283759:android:d9bfbef5436f62b400f55a",
+        "android_client_info": {
+          "package_name": "com.example.final_agriculture_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "60373283759-iinceifgo5724j30qe9dntkhl7h2ad8s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCi1ltHjzYv21U-P8WNgAM-1T8Hey_G-vQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "60373283759-iinceifgo5724j30qe9dntkhl7h2ad8s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
