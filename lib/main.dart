@@ -13,12 +13,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   Bloc.observer = MyBlocObserver();
-  var token=await FirebaseMessaging.instance.getToken();
+  var token = await FirebaseMessaging.instance.getToken();
   FirebaseMessaging.onMessage.listen((event) {
     print(event.data.toString());
   });
@@ -29,12 +30,12 @@ void main() async {
   uid = CacheHelper.getData(key: 'uid');
   //print(token);
   Widget widget;
-  if(uid != null) {
+  if (uid != null) {
     widget = LayoutScreen();
+  } else {
+    widget = LoginScreen();
   }
-  else{
-    widget=LoginScreen();
-  }
+
   // if (onBoarding != null) {
   //   if (token != null) {
   //     widget = const ShopLayoutScreen();
@@ -53,37 +54,35 @@ void main() async {
 class MyApp extends StatelessWidget {
   final Widget? startWidget;
   final bool? isDark;
-  const MyApp({ this.startWidget,this.isDark, Key? key}) : super(key: key);
+  const MyApp({this.startWidget, this.isDark, Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context){
-    BluetoothController.instance.initiateConnection();
-          return MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (context) => ProjectCubit()..GetUserData(),
-              ),
-              BlocProvider(
-                create: (context) => AppThemeModeCubit()
-                  ..changeAppThemeMode(
-                    fromShared: isDark,
-                  ),
-              ),
-            ],
-            child: BlocConsumer<AppThemeModeCubit,AppThemeModeStates>(
-              listener: (context, state) {},
-              builder: (context, state) {
-                return MaterialApp(
-                  debugShowCheckedModeBanner: false,
-                  theme: lightMode,
-                  darkTheme: darkMode,
-                  themeMode: AppThemeModeCubit.get(context).isDark
-                      ? ThemeMode.dark
-                      : ThemeMode.light,
-                  home: startWidget,
-                );
-              },
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ProjectCubit()..GetUserData(),
+        ),
+        BlocProvider(
+          create: (context) => AppThemeModeCubit()
+            ..changeAppThemeMode(
+              fromShared: isDark,
             ),
+        ),
+      ],
+      child: BlocConsumer<AppThemeModeCubit, AppThemeModeStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: lightMode,
+            darkTheme: darkMode,
+            themeMode: AppThemeModeCubit.get(context).isDark
+                ? ThemeMode.dark
+                : ThemeMode.light,
+            home: startWidget,
           );
-
+        },
+      ),
+    );
   }
 }
