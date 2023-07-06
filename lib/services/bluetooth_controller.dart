@@ -101,9 +101,14 @@ class BluetoothController extends GetxController {
       connection.input!.listen((Uint8List data) {
         String comingMessage = utf8.decode(data);
         List<String> dataInList = comingMessage.split(',');
+        print(dataInList);
         tempreture = dataInList[0];
         humidity = dataInList[1];
-        motorState = dataInList[2];
+        if (dataInList[2] == '0') {
+          motorState = 'off';
+        } else if (dataInList[2] == '1') {
+          motorState = 'on';
+        }
         update();
       });
     } catch (e) {
@@ -112,7 +117,6 @@ class BluetoothController extends GetxController {
       //   Duration(seconds: 5),
       //   () async {
       //     print('Erro While  listening to Bluetooth Module');
-
       //     await startListeningToBluetoothStream();
       //   },
       // );
